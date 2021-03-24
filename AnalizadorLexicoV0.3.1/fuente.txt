@@ -1,0 +1,25 @@
+fiel43
+mexico:=coche
+(())
+98
+77.88888;
+((
+))
+;
+5+6
+5-6
+5*6
+6<=5
+7>=8
+5<4
+6>2
+5!5
+6!=0
+mientras
+5==5:
+chico<grande
+perro>=gato
+five=5
+5+(6/2)-1
+coche22!=tren44
+si tren==coche:
