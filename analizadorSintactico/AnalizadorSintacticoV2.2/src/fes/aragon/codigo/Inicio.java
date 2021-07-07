@@ -62,8 +62,15 @@ public class Inicio {
     }
     //funciones sintacticas
     private void S() throws IOException{
+        //todo: esta funcion es una funcion de inicio para toda gramatica
         System.out.println("S->".replaceAll("\n",""));
-        E();
+        if (token.getLexema() == Sym.TRUE || token.getLexema() == Sym.FALSE){
+            E();
+        }else {
+            siguienteToken();
+            siguienteToken();
+            A();
+        }
         if (token.getLexema() !=Sym.PUNTOCOMA){
             errorEnLinea =true;
             throw new IOException("Error en el compilador"+token.getLinea());
@@ -72,16 +79,57 @@ public class Inicio {
             errorEnLinea=false;
         }
     }
+    private void A() throws  IOException{
+        //funcion con reconocimiento de condicion dentro de un if
+        C();
+        D();
+        C();
+    }
+    private void B() throws  IOException{
+        //funcion con reconocimiento de condicion dentro de un if
+        if (token.getLexema() == Sym.TERMINAR){
+            siguienteToken();
+        }
+        if (token.getLexema() == Sym.CONDICION_ELSE){
+            siguienteToken();
+            F();
+            if (token.getLexema() == Sym.TERMINAR){
+                siguienteToken();
+            }
+        }
+
+    }
+    private void C() throws  IOException{
+        //funcion con reconocimiento de condicion dentro de un if
+        if (token.getLexema()== Sym.IDENTIFICADOR)siguienteToken();
+        else E();
+
+    }
+    private void D() throws  IOException{
+        //funcion con reconocimiento de condicion dentro de un if
+        if (token.getLexema() == Sym.IGUAL) siguienteToken();
+        if (token.getLexema() == Sym.MENOR) siguienteToken();
+        if (token.getLexema() == Sym.MAYOR) siguienteToken();
+        if (token.getLexema() == Sym.MAYOR_QUE) siguienteToken();
+        if (token.getLexema() == Sym.MENOR_QUE) siguienteToken();
+        if (token.getLexema() == Sym.DIFERENTE) siguienteToken();
+    }
     private void E() throws IOException{
+        //esta funcion reconoce AND
         System.out.println("E->".replaceAll("\n"," "));
+        if (token.getLexema() == Sym.NUM_ENTERO)siguienteToken();
+        /*
         T();
         if (token.getLexema()==Sym.AND){
             System.out.println(token.getToken()+"->".replaceAll("\n"," "));
             siguienteToken();
             E();
         }
+        *
+         */
     }
     private void T() throws IOException{
+        //esta funcion reconoce and
         System.out.println("T->".replaceAll("\n"," "));
         F();
         if (token.getLexema()==Sym.AND){
@@ -91,6 +139,10 @@ public class Inicio {
         }
     }
     private void F() throws IOException {
+        //esta funcion reconoce los token NOT,TRUE Y PARENTESIS
+        System.out.println("F->".replaceAll("\n"," "));
+
+        /*
         System.out.println("F->".replaceAll("\n"," "));
         if (token.getLexema() == Sym.NOT){
             System.out.println(token.getToken()+"->".replaceAll("\n"," "));
@@ -112,6 +164,29 @@ public class Inicio {
             errorEnLinea=true;
             throw new IOException("Error en el compilador"+token.getLinea());
         }
+        *
+         */
+    }
+    private void Fprima() throws IOException{
+        //esta funcion reconoce and
+        //hay que revisar el funcionamiento de esta funcion
+        System.out.println("F prima->".replaceAll("\n"," "));
+        F();
+
+    }
+    private void G() throws IOException{
+        //esta funcion reconoce and
+        System.out.println("G->".replaceAll("\n"," "));
+
+
+    }
+    private void H() throws IOException{
+        //esta funcion reconoce and
+        System.out.println("H->".replaceAll("\n"," "));
+        if (token.getLexema() == Sym.IDENTIFICADOR)siguienteToken();
+        if (token.getLexema() == Sym.ASIGNACION)siguienteToken();
+        E();
+
     }
     
 }
