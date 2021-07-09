@@ -29,6 +29,7 @@ menorQue="<"
 mayorIgual=">="
 menorIgual="<="
 diferenteDe="!="
+asignacion=":="
 parAp="("
 parC=")"
 ENTERO=[0-9]+
@@ -75,7 +76,7 @@ ID=[a-zA-ZñÑ][0-9A-Za-zñÑ]*
        this.hayToken=true;
        return token;
 }
-":=" {
+{asignacion} {
        Token token=new Token(yytext(),Sym.ASIGNACION,yyline+1,yycolumn+1);
        this.hayToken=true;
        return token;

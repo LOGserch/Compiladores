@@ -1,1 +1,1 @@
-(true and not false);
+if( a >= b ) a:=5 end

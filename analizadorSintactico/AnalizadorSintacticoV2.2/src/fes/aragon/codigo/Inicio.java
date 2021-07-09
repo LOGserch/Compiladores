@@ -5,10 +5,7 @@
  */
 package fes.aragon.codigo;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 /**
  *
@@ -63,15 +60,22 @@ public class Inicio {
     //funciones sintacticas
     private void S() throws IOException{
         //todo: esta funcion es una funcion de inicio para toda gramatica
-        System.out.println("S->".replaceAll("\n",""));
-        if (token.getLexema() == Sym.TRUE || token.getLexema() == Sym.FALSE){
-            E();
-        }else {
+        //System.out.println("S->".replaceAll("\n",""));
+        System.out.println(token.getToken());
+        if (token.getLexema() == Sym.CONDICION_IF) siguienteToken();
+        if (token.getLexema() == Sym.PARA){
+            System.out.println(token.getToken());
             siguienteToken();
-            siguienteToken();
-            A();
         }
-        if (token.getLexema() !=Sym.PUNTOCOMA){
+        A();
+        if (token.getLexema() == Sym.PARC) {
+            System.out.println(token.getToken());
+            siguienteToken();
+        }
+        F();
+        B();
+
+        if (token.getLexema() !=Sym.TERMINAR){
             errorEnLinea =true;
             throw new IOException("Error en el compilador"+token.getLinea());
         }else {
@@ -81,31 +85,44 @@ public class Inicio {
     }
     private void A() throws  IOException{
         //funcion con reconocimiento de condicion dentro de un if
+        //System.out.println("A->".replaceAll("\n",""));
         C();
         D();
         C();
     }
     private void B() throws  IOException{
         //funcion con reconocimiento de condicion dentro de un if
-        if (token.getLexema() == Sym.TERMINAR){
-            siguienteToken();
-        }
+        //System.out.println("B->".replaceAll("\n",""));
+
+//        if (token.getLexema() == Sym.TERMINAR){
+//            //System.out.println(token.getToken());
+//        }
         if (token.getLexema() == Sym.CONDICION_ELSE){
+            System.out.println(token.getToken());
             siguienteToken();
+            System.out.println(token.getToken());
             F();
+            siguienteToken();
             if (token.getLexema() == Sym.TERMINAR){
+                System.out.println(token.getToken());
                 siguienteToken();
             }
         }
 
     }
     private void C() throws  IOException{
+        //System.out.println("C->".replaceAll("\n",""));
         //funcion con reconocimiento de condicion dentro de un if
-        if (token.getLexema()== Sym.IDENTIFICADOR)siguienteToken();
+        if (token.getLexema()== Sym.IDENTIFICADOR){
+            System.out.println(token.getToken());
+            siguienteToken();
+        }
         else E();
 
     }
     private void D() throws  IOException{
+        //System.out.println("D->".replaceAll("\n",""));
+        System.out.println(token.getToken());
         //funcion con reconocimiento de condicion dentro de un if
         if (token.getLexema() == Sym.IGUAL) siguienteToken();
         if (token.getLexema() == Sym.MENOR) siguienteToken();
@@ -116,75 +133,62 @@ public class Inicio {
     }
     private void E() throws IOException{
         //esta funcion reconoce AND
-        System.out.println("E->".replaceAll("\n"," "));
-        if (token.getLexema() == Sym.NUM_ENTERO)siguienteToken();
-        /*
-        T();
-        if (token.getLexema()==Sym.AND){
-            System.out.println(token.getToken()+"->".replaceAll("\n"," "));
+        //System.out.println("E->".replaceAll("\n"," "));
+
+        if (token.getLexema() == Sym.NUM_ENTERO){
+            System.out.println(token.getToken());
             siguienteToken();
-            E();
         }
-        *
-         */
-    }
-    private void T() throws IOException{
-        //esta funcion reconoce and
-        System.out.println("T->".replaceAll("\n"," "));
-        F();
-        if (token.getLexema()==Sym.AND){
-            System.out.println(token.getToken()+"->".replaceAll("\n"," "));
-            siguienteToken();
-            T();
-        }
+
     }
     private void F() throws IOException {
         //esta funcion reconoce los token NOT,TRUE Y PARENTESIS
-        System.out.println("F->".replaceAll("\n"," "));
-
-        /*
-        System.out.println("F->".replaceAll("\n"," "));
-        if (token.getLexema() == Sym.NOT){
-            System.out.println(token.getToken()+"->".replaceAll("\n"," "));
+        //System.out.println("F->".replaceAll("\n"," "));
+        G();
+        if (token.getLexema() == Sym.PUNTOCOMA){
+            System.out.println(token.getToken());
             siguienteToken();
-            F();
-        }else if ((token.getLexema()==Sym.TRUE)||(token.getLexema()==Sym.FALSE)){
-            System.out.println(token.getToken()+"->".replaceAll("\n"," "));
-            siguienteToken();
-
-        }else if (token.getLexema()==Sym.PARA){
-            System.out.println(token.getToken()+"->".replaceAll("\n"," "));
-            siguienteToken();
-            E();
-            if (token.getLexema()==Sym.PARC){
-                System.out.println(token.getToken()+"->".replaceAll("\n"," "));
-                siguienteToken();
-            }
-        }else {
-            errorEnLinea=true;
-            throw new IOException("Error en el compilador"+token.getLinea());
         }
-        *
-         */
+        else Fprima();
+
     }
     private void Fprima() throws IOException{
         //esta funcion reconoce and
         //hay que revisar el funcionamiento de esta funcion
-        System.out.println("F prima->".replaceAll("\n"," "));
-        F();
+        //System.out.println("F prima->".replaceAll("\n"," "));
+        if ((token.getLexema() == Sym.ASIGNACION) || (token.getLexema() == Sym.CONDICION_IF)) {
+            System.out.println(token.getToken());
+            F();
+        }
+
 
     }
     private void G() throws IOException{
         //esta funcion reconoce and
-        System.out.println("G->".replaceAll("\n"," "));
+        //System.out.println("G->".replaceAll("\n"," "));
+
+        if (token.getLexema() == Sym.CONDICION_IF){
+            System.out.println(token.getToken());
+            S();
+        }
+        if (token.getLexema() == Sym.IDENTIFICADOR){
+            H();
+        }
 
 
     }
     private void H() throws IOException{
         //esta funcion reconoce and
-        System.out.println("H->".replaceAll("\n"," "));
-        if (token.getLexema() == Sym.IDENTIFICADOR)siguienteToken();
-        if (token.getLexema() == Sym.ASIGNACION)siguienteToken();
+        //System.out.println("H->".replaceAll("\n"," "));
+
+        if (token.getLexema() == Sym.IDENTIFICADOR){
+            System.out.println(token.getToken());
+            siguienteToken();
+        }
+        if (token.getLexema() == Sym.ASIGNACION){
+            System.out.println(token.getToken());
+            siguienteToken();
+        }
         E();
 
     }
