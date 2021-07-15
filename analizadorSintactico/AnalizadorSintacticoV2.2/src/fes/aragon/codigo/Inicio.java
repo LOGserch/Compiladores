@@ -75,9 +75,9 @@ public class Inicio {
         F();
         B();
 
-        if (token.getLexema() !=Sym.TERMINAR){
+        if (token.getLexema() != Sym.TERMINAR){
             errorEnLinea =true;
-            throw new IOException("Error en el compilador"+token.getLinea());
+            throw new IOException("Error en el compilador"+" linea "+token.getLinea());
         }else {
             System.out.println(token.getToken()+"->".replaceAll("\n"," "));
             errorEnLinea=false;
@@ -100,9 +100,9 @@ public class Inicio {
         if (token.getLexema() == Sym.CONDICION_ELSE){
             System.out.println(token.getToken());
             siguienteToken();
-            System.out.println(token.getToken());
+
             F();
-            siguienteToken();
+
             if (token.getLexema() == Sym.TERMINAR){
                 System.out.println(token.getToken());
                 siguienteToken();
