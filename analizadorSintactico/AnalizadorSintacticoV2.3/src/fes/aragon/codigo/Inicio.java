@@ -9,7 +9,7 @@ import java.io.*;
 
 /**
  *
- * @author mash
+ * @author sergio
  */
 public class Inicio {
     private AnalizadorLexico analizador=null;
@@ -103,31 +103,31 @@ public class Inicio {
     private void OPERADOR() throws IOException{
         //System.out.println("OPERADOR->".replaceAll("\n"," "));
         /*
-        esta funcion solo acepta elementos terminales de suma, resta,multiplicaion y division
+        esta funcion solo acepta elementos terminales de suma, resta,multiplicacion y division
          */
         if (token.getLexema() == Sym.SUMA){
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
         }
         if (token.getLexema() == Sym.RESTA) {
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
         }
         if (token.getLexema() == Sym.MULTIPLICACION) {
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
         }
         if (token.getLexema() == Sym.DIVISION) {
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
@@ -146,28 +146,28 @@ public class Inicio {
         encerrado con parentesis
          */
         if ((token.getLexema() ==Sym.NUM_ENTERO)||(token.getLexema() == Sym.NUM_REAL)) {
-            System.out.print(token.getToken());
+            //System.out.print(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
         }
         if (token.getLexema() == Sym.IDENTIFICADOR){
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
         }
         if (token.getLexema() == Sym.PARA){
-            System.out.println(token.getToken());
+            //System.out.println(token.getToken());
             siguienteToken();
             if (token.getLexema() == Sym.ESPACIO){
                 siguienteToken();
             }
             E();
             if (token.getLexema() == Sym.PARC){
-                System.out.println(token.getToken());
+                //System.out.println(token.getToken());
                 siguienteToken();
             }
         }
