@@ -1,2 +1,3 @@
-abcd#
-aabcd#
+a b c d #
+
+a #

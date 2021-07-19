@@ -15,4 +15,5 @@ public enum Sym {;
     public static final int EOF=2;
     public static final int IDENTIFICADOR=3;
     public static final int ESPACIO =4;
+    public static final int GATITO =5;
 }

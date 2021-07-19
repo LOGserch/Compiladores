@@ -23,7 +23,8 @@ package fes.aragon.codigo;
 Espacio=" "
 PuntoComa=";"
 saltoLinea=\n|\r
-ID=[a-zA-ZñÑ]+(_[a-zA-Z]+)?
+ID=[a-d]
+GATITO="#"
 
 %%
 {ID} {
@@ -43,6 +44,11 @@ ID=[a-zA-ZñÑ]+(_[a-zA-Z]+)?
 }
 {Espacio} {
           Token token=new Token(yytext(),Sym.ESPACIO,yyline+1,yycolumn+1);
+          this.hayToken=true;
+          return token;
+}
+{GATITO} {
+          Token token=new Token(yytext(),Sym.GATITO,yyline+1,yycolumn+1);
           this.hayToken=true;
           return token;
 }

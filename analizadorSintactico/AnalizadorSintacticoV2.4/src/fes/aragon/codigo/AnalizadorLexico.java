@@ -33,17 +33,17 @@ public class AnalizadorLexico {
   private static final char [] ZZ_CMAP = {
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  2,  2,  1,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,  0, 
-     0,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5, 
-     5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  0,  0,  0,  0,  6, 
-     0,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5, 
-     5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  0,  0,  0,  0,  0, 
+     3,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  6,  6,  6,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
-     0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
+     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 
      0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
@@ -55,10 +55,10 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\4\1\5\1\0\1\5";
+    "\1\0\1\1\1\2\1\3\1\4\1\5\1\6";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[8];
+    int [] result = new int[7];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -83,10 +83,10 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\10\0\10\0\10\0\10\0\20\0\30\0\30";
+    "\0\0\0\7\0\7\0\7\0\7\0\7\0\7";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[8];
+    int [] result = new int[7];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -109,11 +109,10 @@ public class AnalizadorLexico {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\1\0\1\4\1\5\1\6\1\2\1\6"+
-    "\15\0\1\6\1\7\1\6\5\0\1\10\2\0";
+    "\1\2\1\3\1\0\1\4\1\5\1\6\1\7\7\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[32];
+    int [] result = new int[14];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -156,10 +155,10 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\4\11\1\1\1\0\1\1";
+    "\1\0\6\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[8];
+    int [] result = new int[7];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -656,35 +655,42 @@ public class AnalizadorLexico {
     System.out.println(error);
             }
             // fall through
-          case 6: break;
+          case 7: break;
           case 2:
             { Token token=new Token(yytext(),Sym.SALTOLINEA,yyline+1,yycolumn+1);
           this.hayToken=true;
           return token;
             }
             // fall through
-          case 7: break;
+          case 8: break;
           case 3:
             { Token token=new Token(yytext(),Sym.ESPACIO,yyline+1,yycolumn+1);
           this.hayToken=true;
           return token;
             }
             // fall through
-          case 8: break;
+          case 9: break;
           case 4:
+            { Token token=new Token(yytext(),Sym.GATITO,yyline+1,yycolumn+1);
+          this.hayToken=true;
+          return token;
+            }
+            // fall through
+          case 10: break;
+          case 5:
             { Token token=new Token(yytext(),Sym.PUNTOCOMA,yyline+1,yycolumn+1);
             this.hayToken=true;
             return token;
             }
             // fall through
-          case 9: break;
-          case 5:
+          case 11: break;
+          case 6:
             { Token token=new Token(yytext(),Sym.IDENTIFICADOR,yyline+1,yycolumn+1);
             this.hayToken=true;
             return token;
             }
             // fall through
-          case 10: break;
+          case 12: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

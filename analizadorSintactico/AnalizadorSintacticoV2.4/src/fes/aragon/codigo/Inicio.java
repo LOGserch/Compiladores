@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package fes.aragon.codigo;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 import java.io.*;
+
 
 /**
  *
@@ -31,11 +30,11 @@ public class Inicio {
      */
 
     private final String[] noTerminales = {"S", "A", "B", "C"};
-    private final String[] Terminales = {"a", "b", "c", "d","#"};
+    private final String[] Terminales = {"a", "b", "c", "d", "#"};
     private final String Lambda = "&";
     private final String[][] Tabla = {{"A B", "A B", "error", "error", "error"},
             {"a", "&", "error", "error", "error"},
-            {"error", "b C d ", "error", "error", "error"},
+            {"error", "b C d", "error", "error", "error"},
             {"error", "error", "c", "&", "error"}};
     private Stack<String> pila = new Stack<>();
     private ArrayList<String> cadena = new ArrayList<>();
@@ -46,9 +45,9 @@ public class Inicio {
 
     private void siguienteToken() {
         try {
-            token = analizador.yylex();
-            if (token == null) {
-                token = new Token("EOF", Sym.EOF, 0, 0);
+            this.token = this.analizador.yylex();
+            if (this.token == null) {
+                this.token = new Token("EOF", Sym.EOF, 0, 0);
                 throw new IOException("Fin");
             }
         } catch (IOException ex) {
@@ -64,8 +63,10 @@ public class Inicio {
             //bloque de apertura para la lectura del documento de texto
 
             Inicio app = new Inicio();
-            BufferedReader buf = new BufferedReader(new FileReader(System.getProperty("user.dir") +
-                    "/fuente.txt"));
+//            BufferedReader buf = new BufferedReader(new FileReader(System.getProperty("user.dir") +
+//                    "/fuente.txt"));
+            String filePath = new File("fuente.txt").getAbsolutePath();
+            BufferedReader buf = new BufferedReader(new FileReader(filePath));
             app.analizador = new AnalizadorLexico(buf);
             app.cadena.addAll(Arrays.asList(app.Terminales));
             //System.out.println(app.cadena.get(0));
@@ -80,103 +81,112 @@ public class Inicio {
             //System.out.println(app.pila.lastElement());
 
             while (app.token.getLexema() != Sym.EOF) {
-                /*
                 try {
+                    while (!app.pila.lastElement().equals(app.topePila)) {
+                        if (app.pila.lastElement().equals(app.token.getToken())) {
+                            app.Consumir();
+                            app.siguienteToken();
+                        }
+                        else if (!app.pila.lastElement().equals(app.token.getToken())) {
+                            app.siNoEsTerminal(app.pila.lastElement(), app.token.getToken());
+                        }
+                        else if (app.simbolo.equals("error")) {
+                            app.errorEnLinea =true;
+                            throw new IOException("Error en el compilador"+" linea "+app.token.getLinea());
+                        }
+                        else if ((app.token.getToken()) == "#" && (!app.pila.lastElement().equals(app.token.getToken()))){
+                            throw new IOException("Error de sintaxis"+" linea "+app.token.getLinea());
+                        }
+                    }
+                    if (app.errorEnLinea) {
+                        System.out.println("error en linea: " + app.token.getLinea());
+
+                    } else {
+                        if (app.token.getLexema() == Sym.GATITO){
+                            System.out.println("todo bien en linea: " + app.token.getLinea());
+                        }
+                    }
+                    app.siguienteToken();
+                    app.errorEnLinea = false;
 
                 }catch (IOException ex){
                     System.out.println(ex.getMessage());
                 }
-
-                 */
-
-                //empezamos transiciones
-                while (!app.pila.lastElement().equals(app.topePila)) {
-                    if (app.pila.lastElement().equals(app.token.getToken())) {
-                        app.pila.pop();
-                        app.cadena.remove(0);
-                        app.siguienteToken();
-                    } else if (!app.pila.lastElement().equals(app.token.getToken())) {
-                        app.simbolo = app.siNoEsTerminal(app.pila.lastElement(), app.token.getToken());
-                        /*
-                         aqui nose especificamente si hay que pasar el lexema o el token, aunque difiero
-                        en que en definitiva es el token el que se le debe de pasar para la comparacion
-                         */
-                        app.pila.pop();
-                        app.pila.add(app.simbolo);
-                    }
-                    if (app.simbolo.equals("error")) {
-                        app.errorEnLinea =true;
-                        throw new IOException("Error en el compilador"+" linea "+app.token.getLinea());
-                    }
-
-                    // else if (app.pila.equals())
-
-                }
-                if (!app.errorEnLinea) {
-                    System.out.println("todo bien en linea: " + app.token.getLinea());
-
-                } else {
-                    System.out.println("error en linea: " + app.token.getLinea());
-                }
-                /*
-                    } catch (IOException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    *
-
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-             */
-                app.siguienteToken();
-                app.errorEnLinea = false;
-
             }
         }catch (FileNotFoundException ex){
                 ex.printStackTrace();
             }
     }
-        public String siNoEsTerminal (String noTerminal, String terminal) throws IOException{
+        public void siNoEsTerminal (String noTerminal, String terminal) throws IOException{
         /*
         obtenemos la regla de produccion desde la Tabla de reglas con los indices
         ->columna = Simbolo terminal
         ->fila = simbolo no terminal
          */
-            return Tabla[getFila(noTerminal)][getColumna(terminal)];
+            if (terminal.equals(" ")){
+                this.siguienteToken();
+            }else {
+                String regla = this.Tabla[getFila(noTerminal)][getColumna(terminal)];
+
+                if (regla.equals("A B")) {
+                    this.pila.pop();
+                    AgregarElementos(regla);
+                    //return regla;
+                }else if (regla.equals("b C d")){
+                    this.pila.pop();
+                    AgregarElementos(regla);
+                    // return regla;
+                }else if (regla.equals("error")){
+                    this.simbolo=regla;
+                }else if(regla.equals("&")){
+                    //pila.pop();
+                }else if (regla.equals("a")||regla.equals("c")){
+                    this.pila.pop();
+                    AgregarElementos(regla);
+                }
+            }
+
         }
 
         //funciones para obtener las filas y columnas correspondientes
 
     public int getFila (String noTerminal) throws IOException{
-        int contador=0;
-        for (int i =0; i <= noTerminales.length; i++) {
-            if (noTerminales[i] == noTerminal) {
-                noTerminal = noTerminales[i];
-            } else contador++;
+        int i;
+        for (i =0; i < this.noTerminales.length; i++) {
+            if (!this.noTerminales[i].equals(noTerminal)) {
+                continue;
+            }else break;
         }
-        return contador;
+        return i;
     }
 
     public int getColumna (String Terminal) throws IOException{
-        int contador=0;
-        for (int i =0; i <= Terminales.length; i++) {
-            if (Terminales[i] == Terminal) {
-                Terminal = Terminales[i];
-            }else contador++;
+        int i;
+        for (i=0; i < this.Terminales.length; i++) {
+            if (!this.Terminales[i].equals(Terminal)) {
+                continue;
+            }else break;
         }
-        return contador;
+        return i;
     }
 
-    public void AgregarElementos(String elemento){
+    public void AgregarElementos(String elemento) throws IOException{
         if(elemento.equals("A B")){
-            pila.add("B");
-            pila.add("A");
+            this.pila.add("B");
+            this.pila.add("A");
 
         }else if(elemento.equals("b C d")){
-            pila.add("d");
-            pila.add("C");
-            pila.add("b");
-        }
+            this.pila.add("d");
+            this.pila.add("C");
+            this.pila.add("b");
+        }else if(elemento.equals("&")){
+
+        }else this.pila.add(elemento);
+    }
+
+    public void Consumir(){
+        this.pila.pop();
+        this.cadena.remove(0);
     }
 }
 
