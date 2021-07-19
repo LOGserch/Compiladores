@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package fes.aragon.codigo;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 import java.io.*;
+
 /**
  *
  * @author Sergio
@@ -28,7 +31,7 @@ public class Inicio {
      */
 
     private final String[] noTerminales = {"S", "A", "B", "C"};
-    private final String[] Terminales = {"a", "b", "c", "d", "#"};
+    private final String[] Terminales = {"a", "b", "c", "d","#"};
     private final String Lambda = "&";
     private final String[][] Tabla = {{"A B", "A B", "error", "error", "error"},
             {"a", "&", "error", "error", "error"},
@@ -54,7 +57,7 @@ public class Inicio {
     }
 
     public static void main(String[] args) throws IOException {
-        int contador = 0;
+        //app.cadena.addAll(Arrays.asList(app.Terminales));
         boolean value = false;
         try {
 
@@ -73,6 +76,7 @@ public class Inicio {
              */
             app.pila.add(app.topePila);
             app.pila.add(app.noTerminales[0]);
+            app.siguienteToken();
             //System.out.println(app.pila.lastElement());
 
             while (app.token.getLexema() != Sym.EOF) {
@@ -82,8 +86,9 @@ public class Inicio {
                 }catch (IOException ex){
                     System.out.println(ex.getMessage());
                 }
-                *
+
                  */
+
                 //empezamos transiciones
                 while (!app.pila.lastElement().equals(app.topePila)) {
                     if (app.pila.lastElement().equals(app.token.getToken())) {
@@ -93,16 +98,18 @@ public class Inicio {
                     } else if (!app.pila.lastElement().equals(app.token.getToken())) {
                         app.simbolo = app.siNoEsTerminal(app.pila.lastElement(), app.token.getToken());
                         /*
-                        todo -> aqui nose especificamente si hay que pasar el lexema o el token, aunque difiero
+                         aqui nose especificamente si hay que pasar el lexema o el token, aunque difiero
                         en que en definitiva es el token el que se le debe de pasar para la comparacion
                          */
                         app.pila.pop();
                         app.pila.add(app.simbolo);
                     }
-                    if (app.simbolo.equals("error")) System.out.println("error");
+                    if (app.simbolo.equals("error")) {
+                        app.errorEnLinea =true;
+                        throw new IOException("Error en el compilador"+" linea "+app.token.getLinea());
+                    }
 
                     // else if (app.pila.equals())
-                    contador++;
 
                 }
                 if (!app.errorEnLinea) {
@@ -129,36 +136,48 @@ public class Inicio {
                 ex.printStackTrace();
             }
     }
-        public String siNoEsTerminal (String terminal, String noTerminal) throws IOException{
+        public String siNoEsTerminal (String noTerminal, String terminal) throws IOException{
         /*
         obtenemos la regla de produccion desde la Tabla de reglas con los indices
         ->columna = Simbolo terminal
         ->fila = simbolo no terminal
          */
-            return Tabla[Integer.parseInt(getColumna(terminal))]
-                    [Integer.parseInt(getFila(noTerminal))];
+            return Tabla[getFila(noTerminal)][getColumna(terminal)];
         }
 
         //funciones para obtener las filas y columnas correspondientes
 
-        public String getFila (String noTerminal) throws IOException{
-            for (String element : noTerminales) {
-                if (element.equals(noTerminal)) {
-                    noTerminal = noTerminales[Integer.parseInt(element)];
-                }
-            }
-            return noTerminal;
+    public int getFila (String noTerminal) throws IOException{
+        int contador=0;
+        for (int i =0; i <= noTerminales.length; i++) {
+            if (noTerminales[i] == noTerminal) {
+                noTerminal = noTerminales[i];
+            } else contador++;
         }
+        return contador;
+    }
 
-        public String getColumna (String Terminal) throws IOException{
-
-            for (String element : Terminales) {
-                if (element.equals(Terminal)) {
-                    Terminal = Terminales[Integer.parseInt(element)];
-                }
-            }
-            return Terminal;
+    public int getColumna (String Terminal) throws IOException{
+        int contador=0;
+        for (int i =0; i <= Terminales.length; i++) {
+            if (Terminales[i] == Terminal) {
+                Terminal = Terminales[i];
+            }else contador++;
         }
+        return contador;
+    }
+
+    public void AgregarElementos(String elemento){
+        if(elemento.equals("A B")){
+            pila.add("B");
+            pila.add("A");
+
+        }else if(elemento.equals("b C d")){
+            pila.add("d");
+            pila.add("C");
+            pila.add("b");
+        }
+    }
 }
 
 
