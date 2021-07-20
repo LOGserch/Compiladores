@@ -1,59 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fes.aragon.codigo;
 
-/**
- *
- * @author mash
- */
 public class Token {
-    private String token;
-    private int lexema;
     private int linea;
+    private int lexema;
     private int columna;
-
+    private String token;
+    
     public Token(String token, int lexema, int linea, int columna) {
+        this.linea = linea;
         this.token = token;
         this.lexema = lexema;
-        this.linea = linea;
         this.columna = columna;
     }
-
+    
     public String getToken() {
-        return token;
+        return this.token;
     }
-
+    
     public void setToken(String token) {
         this.token = token;
     }
-
+    
     public int getLexema() {
-        return lexema;
+        return this.lexema;
     }
-
+    
     public void setLexema(int lexema) {
         this.lexema = lexema;
     }
 
     public int getLinea() {
-        return linea;
+        return this.linea;
     }
-
+    
     public void setLinea(int linea) {
         this.linea = linea;
     }
-
+    
     public int getColumna() {
-        return columna;
+        return this.columna;
     }
-
+    
     public void setColumna(int columna) {
         this.columna = columna;
     }
-    
-    
-    
 }
