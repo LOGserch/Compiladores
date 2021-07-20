@@ -1,8 +1,6 @@
 package fes.aragon.codigo;
 import java.io.*;
 import java.util.Stack;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class Inicio {
     private AnalizadorLexico analizador = null;
