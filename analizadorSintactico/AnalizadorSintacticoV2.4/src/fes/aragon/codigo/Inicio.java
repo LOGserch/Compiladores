@@ -81,7 +81,12 @@ public class Inicio {
             //System.out.println(app.pila.lastElement());
 
             while (app.token.getLexema() != Sym.EOF) {
+
                 try {
+                    if ((app.pila.lastElement().equals("#")) && (!app.token.getToken().equals(app.topePila))){
+                        app.pila.add(app.noTerminales[0]);
+                        buf.readLine();
+                    }
                     while (!app.pila.lastElement().equals(app.topePila)) {
                         if (app.pila.lastElement().equals(app.token.getToken())) {
                             app.Consumir();
@@ -94,9 +99,10 @@ public class Inicio {
                             app.errorEnLinea =true;
                             throw new IOException("Error en el compilador"+" linea "+app.token.getLinea());
                         }
-                        else if ((app.token.getToken()) == "#" && (!app.pila.lastElement().equals(app.token.getToken()))){
+                        else if ((!app.pila.isEmpty()) && (app.token.getToken().equals("#"))){
                             throw new IOException("Error de sintaxis"+" linea "+app.token.getLinea());
                         }
+
                     }
                     if (app.errorEnLinea) {
                         System.out.println("error en linea: " + app.token.getLinea());
@@ -104,8 +110,10 @@ public class Inicio {
                     } else {
                         if (app.token.getLexema() == Sym.GATITO){
                             System.out.println("todo bien en linea: " + app.token.getLinea());
+
                         }
                     }
+                    //app.pila.add(app.noTerminales[0]);
                     app.siguienteToken();
                     app.errorEnLinea = false;
 
@@ -140,7 +148,7 @@ public class Inicio {
                     this.simbolo=regla;
                 }else if(regla.equals("&")){
                     //pila.pop();
-                }else if (regla.equals("a")||regla.equals("c")){
+                }else if (regla.equals("a")||regla.equals("c")) {
                     this.pila.pop();
                     AgregarElementos(regla);
                 }
