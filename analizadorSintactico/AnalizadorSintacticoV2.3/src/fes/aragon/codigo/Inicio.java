@@ -39,10 +39,10 @@ public class Inicio {
             while(app.token.getLexema()!=Sym.EOF){
                 try {
                     app.S();
-                    if (!app.errorEnLinea){
+                    if ((!app.errorEnLinea) && (!app.token.getToken().equals("\r") && (!app.token.getToken().equals("\n")))){
                         System.out.println("todo bien en linea: "+app.token.getLinea());
 
-                    }else {
+                    }else if (!app.token.getToken().equals("\r") && (!app.token.getToken().equals("\n"))){
                         System.out.println("error en linea: "+app.token.getLinea());
                     }
                 }catch (IOException ex) {
@@ -51,7 +51,7 @@ public class Inicio {
                 }
                 //System.out.println(app.token.getToken());
                 app.siguienteToken();
-                app.errorEnLinea = false;
+                //app.errorEnLinea = false;
 
             }
         } catch (FileNotFoundException ex) {
@@ -66,11 +66,11 @@ public class Inicio {
         //cuando se termine el proceso, al final debe haber como lexema un punto y coma para
         //validar con exito el token
         E();
-        if (token.getLexema() != Sym.PUNTOCOMA){
+        if (token.getLexema() != Sym.PUNTOCOMA && token.getLexema() != Sym.SALTOLINEA){
             errorEnLinea =true;
             throw new IOException("Error en el compilador"+" linea "+token.getLinea());
         }else {
-            System.out.println(token.getToken()+"->");
+            //System.out.println(token.getToken()+"->");
             errorEnLinea=false;
            
         }
